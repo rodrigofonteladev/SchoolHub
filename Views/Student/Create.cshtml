@@ -1,0 +1,292 @@
+﻿@model SchoolHub.Models.ViewModels.Student.RegisterStudentViewModel
+
+<div class="container">
+    <h1 class="title is-2">Formulario de Registro - Estudiante</h1>
+
+    <form id="studentForm" asp-controller="Student" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="help is-danger mb-4"></div>
+
+        <div class="columns is-multiline">
+            <div class="column is-12-mobile is-6-tablet">
+                <div class="field">
+                    <label asp-for="PaternalSurname" class="label"></label>
+                    <div class="control">
+                        <input asp-for="PaternalSurname" class="input" placeholder="Paternal Surname">
+                    </div>
+                    <span asp-validation-for="PaternalSurname" class="help is-danger"></span>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-6-tablet">
+                <div class="field">
+                    <label asp-for="MaternalSurname" class="label"></label>
+                    <div class="control">
+                        <input asp-for="MaternalSurname" class="input" placeholder="Maternal Surname">
+                    </div>
+                    <span asp-validation-for="MaternalSurname" class="help is-danger"></span>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-6-tablet">
+                <div class="field">
+                    <label asp-for="FullName" class="label"></label>
+                    <div class="control">
+                        <input asp-for="FullName" class="input" placeholder="Full Name">
+                    </div>
+                    <span asp-validation-for="FullName" class="help is-danger"></span>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-6-tablet">
+                <div class="field">
+                    <label asp-for="Address" class="label"></label>
+                    <div class="control">
+                        <input asp-for="Address" class="input" placeholder="Address">
+                    </div>
+                    <span asp-validation-for="Address" class="help is-danger"></span>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-6-tablet">
+                <div class="field">
+                    <label asp-for="DocumentTypeId" class="label"></label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select asp-for="DocumentTypeId" asp-items="Model.DocumentTypes">
+                                <option value="">Selecciona el tipo de documento</option>
+                            </select>
+                        </div>
+                    </div>
+                    <span asp-validation-for="DocumentTypeId" class="help is-danger"></span>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-6-tablet">
+                <div class="field">
+                    <label asp-for="DocumentNumber" class="label"></label>
+                    <div class="control">
+                        <input asp-for="DocumentNumber" class="input" placeholder="Document Number">
+                    </div>
+                    <span asp-validation-for="DocumentNumber" class="help is-danger"></span>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-6-tablet">
+                <div class="field">
+                    <label asp-for="Email" class="label"></label>
+                    <div class="control">
+                        <input asp-for="Email" class="input" placeholder="Email">
+                    </div>
+                    <span asp-validation-for="Email" class="help is-danger"></span>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-6-tablet">
+                <div class="field">
+                    <label asp-for="PhoneNumber" class="label"></label>
+                    <div class="control">
+                        <input asp-for="PhoneNumber" class="input" placeholder="Phone Number">
+                    </div>
+                    <span asp-validation-for="PhoneNumber" class="help is-danger"></span>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-6-tablet">
+                <div class="field">
+                    <label asp-for="Birthday" class="label"></label>
+                    <div class="control">
+                        <input asp-for="Birthday" type="date" class="input">
+                    </div>
+                    <span asp-validation-for="Birthday" class="help is-danger"></span>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-3-tablet">
+                <div class="field">
+                    <label asp-for="SectionId" class="label"></label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select asp-for="SectionId" asp-items="Model.Sections">
+                                <option value="">Selecciona el nivel educativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <span asp-validation-for="SectionId" class="help is-danger"></span>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-3-tablet">
+                <div class="field">
+                    <label asp-for="ReasonEnrollmentId" class="label"></label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select asp-for="ReasonEnrollmentId" asp-items="Model.ReasonEnrollments">
+                                <option value="">Selecciona el motivo de matrícula</option>
+                            </select>
+                        </div>
+                    </div>
+                    <span asp-validation-for="ReasonEnrollmentId" class="help is-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="is-flex is-justify-content-space-between is-align-items-center mb-4">
+            <h2 class="title is-4 mb-0">Tutors</h2>
+            <button type="button" class="button is-success is-small" id="addTutorBtn">+ Add Tutor</button>
+        </div>
+
+        <span asp-validation-for="Tutors" class="help is-danger"></span>
+
+        <div id="tutorsContainer">
+            @if (Model?.Tutors?.Count > 0)
+            {
+                for (int i = 0; i < Model.Tutors.Count; i++)
+                {
+                    ViewDataDictionary? viewData = new ViewDataDictionary(ViewData);
+                    viewData.TemplateInfo.HtmlFieldPrefix = $"Tutors[{i}]";
+
+                    <partial name="_TutorForm" model="Model.Tutors[i]" view-data="viewData" />
+                }
+            }
+        </div>
+
+        <div class="has-text-centered mt-5">
+            <button class="button is-primary" type="submit">
+                Register Student
+            </button>
+            <a asp-action="Index" class="button is-light">
+                <span class="icon"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></span>
+                <span>Back to students</span>
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        let tutorIndex = @(Model?.Tutors?.Count ?? 0);
+
+        document.getElementById('addTutorBtn')
+            .addEventListener('click', async function () {
+
+                const container = document.getElementById('tutorsContainer');
+
+                const response = await fetch('@Url.Action("AddTutor", "Student")' + `?index=${tutorIndex}`);
+
+                const html = await response.text();
+
+                container.insertAdjacentHTML('beforeend', html);
+
+                tutorIndex++;
+
+                updateTutorTitles();
+
+                refreshValidation();
+            });
+
+        document.getElementById('tutorsContainer')
+            .addEventListener('click', function (event) {
+
+                if (event.target.classList.contains('remove-tutor')) {
+
+                    const tutorCard = event.target.closest('.tutor-card');
+
+                    tutorCard.remove();
+
+                    updateIndexes();
+                }
+            });
+
+        function updateTutorTitles() {
+
+            const cards = document.querySelectorAll('#tutorsContainer .tutor-card');
+
+            cards.forEach((card, index) => {
+
+                const title = card.querySelector('.tutor-title');
+
+                if (title) {
+                    title.innerText = `Tutor #${index + 1}`;
+                }
+
+            });
+        }
+
+        function refreshValidation() {
+
+            const form = $('#studentForm');
+
+            form.removeData('validator');
+            form.removeData('unobtrusiveValidation');
+
+            $.validator.unobtrusive.parse(form);
+        }
+
+        function updateIndexes() {
+
+            const cards = document.querySelectorAll('#tutorsContainer .tutor-card');
+
+            cards.forEach((card, index) => {
+
+                const title = card.querySelector('.tutor-title');
+
+                if (title) {
+                    title.innerText = `Tutor #${index + 1}`;
+                }
+
+                card.querySelectorAll('[name]').forEach(element => {
+
+                    element.name = element.name.replace(
+                        /Tutors\[\d+\]/g,
+                        `Tutors[${index}]`
+                    );
+
+                });
+
+                card.querySelectorAll('[id]').forEach(element => {
+
+                    element.id = element.id.replace(
+                        /Tutors_\d+__/g,
+                        `Tutors_${index}__`
+                    );
+
+                });
+
+                card.querySelectorAll('[for]').forEach(element => {
+
+                    element.htmlFor = element.htmlFor.replace(
+                        /Tutors_\d+__/g,
+                        `Tutors_${index}__`
+                    );
+
+                });
+
+                card.querySelectorAll('[data-valmsg-for]').forEach(element => {
+
+                    const value =
+                        element.getAttribute('data-valmsg-for');
+
+                    element.setAttribute(
+                        'data-valmsg-for',
+                        value.replace(
+                            /Tutors\[\d+\]/g,
+                            `Tutors[${index}]`
+                        )
+                    );
+
+                });
+
+            });
+
+            tutorIndex = cards.length;
+
+            refreshValidation();
+        }
+    </script>
+}

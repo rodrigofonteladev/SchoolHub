@@ -1,0 +1,98 @@
+@model SchoolHub.Models.ViewModels.Tutor.RegisterTutorViewModel
+
+<div class="tutor-card box mb-4">
+    <div class="is-flex is-justify-content-flex-end mb-2">
+        <button type="button" class="button is-danger remove-tutor" aria-label="Remove tutor">x</button>
+    </div>
+    <h3 class="tutor-title title is-5"></h3>
+
+    <div class="columns is-multiline">
+        <div class="column is-12-mobile is-6-tablet">
+            <div class="field">
+                <label asp-for="PaternalSurname" class="label"></label>
+                <div class="control">
+                    <input asp-for="PaternalSurname" class="input" placeholder="Paternal Surname">
+                </div>
+                <span asp-validation-for="PaternalSurname" class="help is-danger"></span>
+            </div>
+        </div>
+
+        <div class="column is-12-mobile is-6-tablet">
+            <div class="field">
+                <label asp-for="MaternalSurname" class="label"></label>
+                <div class="control">
+                    <input asp-for="MaternalSurname" class="input" placeholder="Maternal Surname">
+                </div>
+                <span asp-validation-for="MaternalSurname" class="help is-danger"></span>
+            </div>
+        </div>
+
+        <div class="column is-12-mobile is-6-tablet">
+            <div class="field">
+                <label asp-for="FullName" class="label"></label>
+                <div class="control">
+                    <input asp-for="FullName" class="input" placeholder="Full Name" />
+                </div>
+                <span asp-validation-for="FullName" class="help is-danger"></span>
+            </div>
+        </div>
+
+        <div class="column is-12-mobile is-6-tablet">
+            <div class="field">
+                <label asp-for="Address" class="label"></label>
+                <div class="control">
+                    <input asp-for="Address" class="input" placeholder="Address">
+                </div>
+                <span asp-validation-for="Address" class="help is-danger"></span>
+            </div>
+        </div>
+
+        <div class="column is-12-mobile is-6-tablet">
+            <div class="field">
+                <label asp-for="DocumentTypeId" class="label"></label>
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select asp-for="DocumentTypeId" asp-items="Model.DocumentTypes">
+                            <option value="">Select the document type</option>
+                        </select>
+                    </div>
+                </div>
+                <span asp-validation-for="DocumentTypeId" class="help is-danger"></span>
+            </div>
+        </div>
+
+        <div class="column is-12-mobile is-6-tablet">
+            <div class="field">
+                <label asp-for="DocumentNumber" class="label"></label>
+                <div class="control">
+                    <input asp-for="DocumentNumber" class="input" placeholder="Document Number">
+                </div>
+                <span asp-validation-for="DocumentNumber" class="help is-danger"></span>
+            </div>
+        </div>
+
+        <div class="column is-12-mobile is-6-tablet">
+            <div class="field">
+                <label asp-for="Email" class="label"></label>
+                <div class="control">
+                    <input asp-for="Email" class="input" placeholder="Email">
+                </div>
+                <span asp-validation-for="Email" class="help is-danger"></span>
+            </div>
+        </div>
+
+        <div class="column is-12-mobile is-6-tablet">
+            <div class="field">
+                <label asp-for="Relationship" class="label"></label>
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select asp-for="Relationship" asp-items="Html.GetEnumSelectList<SchoolHub.Common.Enums.TutorType>()">
+                            <option value="">Select a relationship</option>
+                        </select>
+                    </div>
+                </div>
+                <span asp-validation-for="Relationship" class="help is-danger"></span>
+            </div>
+        </div>
+    </div>
+</div>

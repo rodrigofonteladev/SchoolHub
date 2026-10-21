@@ -1,0 +1,56 @@
+﻿@model IEnumerable<SchoolHub.Models.ViewModels.Student.ListStudentViewModel>
+
+<div class="container">
+    <h1 class="title is-2">Students</h1>
+    <a asp-controller="Student" asp-action="Create" class="button is-primary">
+        Create Student
+    </a>
+
+    <div class="table-container mt-5">
+        <table class="table is-fullwidth is-hoverable">
+            <thead>
+                <tr>
+                    <th>Full name</th>
+                    <th>Document</th>
+                    <th>Email</th>
+                    <th>Birthday</th>
+                    <th>Points</th>
+                    <th>Tutors</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="8" class="has-text-centered">No students found.</td></tr>
+                }
+                else
+                {
+                    @foreach (var student in Model)
+                    {
+                        <tr>
+                            <td>@student.FullName @student.PaternalSurname @student.MaternalSurname</td>
+                            <td>@student.DocumentTypeName: @student.DocumentNumber</td>
+                            <td>@student.Email</td>
+                            <td>@student.Birthday.ToString("dd/MM/yyyy")</td>
+                            <td>@student.PointsBalance</td>
+                            <td>@student.TutorCount</td>
+                            <td>@(student.IsActive ? "Active" : "Inactive")</td>
+                            <td>
+                                <div class="buttons are-small">
+                                    <a asp-action="Edit" asp-route-id="@student.Id" class="button is-info" title="Edit student" aria-label="Edit student">
+                                        <span class="icon"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></span>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@student.Id" class="button is-danger" title="Delete student" aria-label="Delete student">
+                                        <span class="icon"><i class="fa-solid fa-trash" aria-hidden="true"></i></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

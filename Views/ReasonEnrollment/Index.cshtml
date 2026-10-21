@@ -1,0 +1,46 @@
+@model IEnumerable<SchoolHub.Models.ViewModels.ReasonEnrollment.ListReasonEnrollmentViewModel>
+
+<div class="container">
+    <h1 class="title is-2">Enrollment Reasons</h1>
+    <a asp-controller="ReasonEnrollment" asp-action="Create" class="button is-primary">
+        Create Enrollment Reason
+    </a>
+
+    <div class="table-container mt-5">
+        <table class="table is-fullwidth is-hoverable">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Enrollments</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="3" class="has-text-centered">No enrollment reasons found.</td></tr>
+                }
+                else
+                {
+                    @foreach (var reason in Model)
+                    {
+                        <tr>
+                            <td>@reason.Description</td>
+                            <td>@reason.EnrollmentCount</td>
+                            <td>
+                                <div class="buttons are-small">
+                                    <a asp-action="Edit" asp-route-id="@reason.Id" class="button is-info" title="Edit enrollment reason" aria-label="Edit enrollment reason">
+                                        <span class="icon"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></span>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@reason.Id" class="button is-danger" title="Delete enrollment reason" aria-label="Delete enrollment reason">
+                                        <span class="icon"><i class="fa-solid fa-trash" aria-hidden="true"></i></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

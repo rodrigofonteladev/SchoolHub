@@ -1,0 +1,52 @@
+@model IEnumerable<SchoolHub.Models.ViewModels.DocumentType.ListDocumentTypeViewModel>
+
+<div class="container">
+    <h1 class="title is-2">Document Types</h1>
+    <a asp-controller="DocumentType" asp-action="Create" class="button is-primary">
+        Create Document Type
+    </a>
+
+    <div class="table-container mt-5">
+        <table class="table is-fullwidth is-hoverable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Students</th>
+                    <th>Teachers</th>
+                    <th>Tutors</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="6" class="has-text-centered">No document types found.</td></tr>
+                }
+                else
+                {
+                    @foreach (var documentType in Model)
+                    {
+                        <tr>
+                            <td>@documentType.Name</td>
+                            <td>@documentType.StudentCount</td>
+                            <td>@documentType.TeacherCount</td>
+                            <td>@documentType.TutorCount</td>
+                            <td>@(documentType.IsActive ? "Active" : "Inactive")</td>
+                            <td>
+                                <div class="buttons are-small">
+                                    <a asp-action="Edit" asp-route-id="@documentType.Id" class="button is-info" title="Edit document type" aria-label="Edit document type">
+                                        <span class="icon"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></span>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@documentType.Id" class="button is-danger" title="Delete document type" aria-label="Delete document type">
+                                        <span class="icon"><i class="fa-solid fa-trash" aria-hidden="true"></i></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

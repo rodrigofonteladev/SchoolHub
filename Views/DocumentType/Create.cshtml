@@ -1,0 +1,44 @@
+@model SchoolHub.Models.ViewModels.DocumentType.RegisterDocumentTypeViewModel
+
+<div class="container">
+    <h1 class="title is-2">Document Type Creation Form</h1>
+
+    <form asp-controller="DocumentType" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="help is-danger mb-4"></div>
+
+        <div class="columns">
+            <div class="column is-12-mobile is-8-tablet">
+                <div class="field">
+                    <label asp-for="Name" class="label"></label>
+                    <div class="control">
+                        <input asp-for="Name" class="input" placeholder="Document type" />
+                    </div>
+                    <span asp-validation-for="Name" class="help is-danger"></span>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-4-tablet">
+                <div class="field">
+                    <label asp-for="IsActive" class="checkbox">
+                        <input asp-for="IsActive" />
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="has-text-centered">
+            <button class="button is-primary" type="submit">Register Document Type</button>
+            <a asp-action="Index" class="button is-light">
+                <span class="icon"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></span>
+                <span>Back to document types</span>
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

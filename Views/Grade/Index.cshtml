@@ -1,0 +1,48 @@
+@model IEnumerable<SchoolHub.Models.ViewModels.Grade.ListGradeViewModel>
+
+<div class="container">
+    <h1 class="title is-2">Grades</h1>
+    <a asp-controller="Grade" asp-action="Create" class="button is-primary">
+        Create Grade
+    </a>
+
+    <div class="table-container mt-5">
+        <table class="table is-fullwidth is-hoverable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Level</th>
+                    <th>Sections</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="4" class="has-text-centered">No grades found.</td></tr>
+                }
+                else
+                {
+                    @foreach (var grade in Model)
+                    {
+                        <tr>
+                            <td>@grade.Name</td>
+                            <td>@grade.LevelName</td>
+                            <td>@grade.SectionCount</td>
+                            <td>
+                                <div class="buttons are-small">
+                                    <a asp-action="Edit" asp-route-id="@grade.Id" class="button is-info" title="Edit grade" aria-label="Edit grade">
+                                        <span class="icon"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></span>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@grade.Id" class="button is-danger" title="Delete grade" aria-label="Delete grade">
+                                        <span class="icon"><i class="fa-solid fa-trash" aria-hidden="true"></i></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

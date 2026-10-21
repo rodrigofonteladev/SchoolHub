@@ -1,0 +1,49 @@
+@model SchoolHub.Models.ViewModels.Grade.RegisterGradeViewModel
+
+<div class="container">
+    <h1 class="title is-2">Grade Creation Form</h1>
+
+    <form asp-controller="Grade" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="help is-danger mb-4"></div>
+
+        <div class="columns">
+            <div class="column is-12-mobile is-6-tablet">
+                <div class="field">
+                    <label asp-for="Name" class="label"></label>
+                    <div class="control">
+                        <input asp-for="Name" class="input" placeholder="Grade Name" />
+                    </div>
+                    <span asp-validation-for="Name" class="help is-danger"></span>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-6-tablet">
+                <div class="field">
+                    <label asp-for="LevelId" class="label"></label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select asp-for="LevelId" asp-items="Model.Levels">
+                                <option value="">Select a level</option>
+                            </select>
+                        </div>
+                    </div>
+                    <span asp-validation-for="LevelId" class="help is-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="has-text-centered">
+            <button class="button is-primary" type="submit">Register Grade</button>
+            <a asp-action="Index" class="button is-light">
+                <span class="icon"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></span>
+                <span>Back to grades</span>
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

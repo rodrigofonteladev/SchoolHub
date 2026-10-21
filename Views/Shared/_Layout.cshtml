@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SchoolHub</title>
+    <script type="importmap"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SchoolHub.styles.css" asp-append-version="true" />
+</head>
+<body class="app-shell">
+    <aside id="app-sidebar" class="app-sidebar" aria-label="Main navigation">
+        <div class="sidebar-header">
+            <a class="sidebar-brand" asp-area="" asp-controller="Home" asp-action="Index" title="SchoolHub" aria-label="SchoolHub">
+                <span class="icon"><i class="fa-solid fa-school" aria-hidden="true"></i></span>
+            </a>
+        </div>
+        <nav class="sidebar-nav menu" aria-label="Main sections">
+            <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="Index" title="Home" aria-label="Home"><span class="icon"><i class="fa-solid fa-house" aria-hidden="true"></i></span></a>
+            <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="Privacy" title="Privacy" aria-label="Privacy"><span class="icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></span></a>
+            @if (User.IsInRole(nameof(Role.Admin)))
+            {
+                <a class="sidebar-link" asp-area="" asp-controller="Student" asp-action="Index" title="Students" aria-label="Students"><span class="icon"><i class="fa-solid fa-users" aria-hidden="true"></i></span></a>
+                <a class="sidebar-link" asp-area="" asp-controller="Role" asp-action="Index" title="Roles" aria-label="Roles"><span class="icon"><i class="fa-solid fa-user-shield" aria-hidden="true"></i></span></a>
+                <a class="sidebar-link" asp-area="" asp-controller="Level" asp-action="Index" title="Levels" aria-label="Levels"><span class="icon"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span></a>
+                <a class="sidebar-link" asp-area="" asp-controller="Grade" asp-action="Index" title="Grades" aria-label="Grades"><span class="icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span></a>
+                <a class="sidebar-link" asp-area="" asp-controller="Section" asp-action="Index" title="Sections" aria-label="Sections"><span class="icon"><i class="fa-solid fa-table-columns" aria-hidden="true"></i></span></a>
+                <a class="sidebar-link" asp-area="" asp-controller="ReasonEnrollment" asp-action="Index" title="Enrollment reasons" aria-label="Enrollment reasons"><span class="icon"><i class="fa-solid fa-clipboard-question" aria-hidden="true"></i></span></a>
+                <a class="sidebar-link" asp-area="" asp-controller="DocumentType" asp-action="Index" title="Document types" aria-label="Document types"><span class="icon"><i class="fa-solid fa-id-card" aria-hidden="true"></i></span></a>
+                <a class="sidebar-link" asp-area="" asp-controller="Payment" asp-action="Index" title="Payments" aria-label="Payments"><span class="icon"><i class="fa-solid fa-money-check-dollar" aria-hidden="true"></i></span></a>
+            }
+        </nav>
+    </aside>
+    <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+    <div class="app-content">
+        <header class="sidebar-toolbar">
+            <div class="is-flex is-align-items-center is-justify-content-space-between is-flex-grow-1">
+                <button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-controls="app-sidebar" aria-expanded="true" title="Hide navigation" aria-label="Hide navigation">
+                    <span class="icon"><i class="fa-solid fa-angles-right" aria-hidden="true"></i></span>
+                </button>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <div class="is-flex is-align-items-center is-gap-2">
+                        <span class="is-size-7">@User.Identity.Name</span>
+                        <form asp-controller="Account" asp-action="Logout" method="post">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="button is-small is-light">Cerrar sesión</button>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="button is-small is-primary">Iniciar sesión</a>
+                }
+            </div>
+        </header>
+        <main role="main" class="section app-main">
+            @RenderBody()
+        </main>
+
+        <footer class="footer app-footer">
+        <div class="container">
+            &copy; 2026 - SchoolHub - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+        </footer>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

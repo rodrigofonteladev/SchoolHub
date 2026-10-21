@@ -1,0 +1,68 @@
+@using SchoolHub.Common.Enums
+@model IEnumerable<SchoolHub.Models.ViewModels.Payment.ListPaymentViewModel>
+
+<div class="container">
+    <h1 class="title is-2">Payments</h1>
+
+    @if (TempData["PaymentError"] is string paymentError)
+    {
+        <div class="notification is-danger">@paymentError</div>
+    }
+
+    <div class="table-container mt-5">
+        <table class="table is-fullwidth is-hoverable">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Enrollment</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Academic year</th>
+                    <th>Installment</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="9" class="has-text-centered">No payments found.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var payment in Model)
+                    {
+                        <tr>
+                            <td>@payment.StudentName</td>
+                            <td>#@payment.EnrollmentId</td>
+                            <td>@payment.PaymentType</td>
+                            <td>@payment.Amount.ToString("N2") @payment.Currency</td>
+                            <td>@payment.PaymentStatus</td>
+                            <td>@(payment.AcademicYear?.ToString() ?? "-")</td>
+                            <td>@(payment.InstallmentNumber?.ToString() ?? "-")</td>
+                            <td>@payment.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                <div class="buttons are-small">
+                                    @if (payment.PaymentStatus == PaymentStatus.Pending || payment.PaymentStatus ==
+                            PaymentStatus.Failed)
+                                    {
+                                        <form asp-action="Checkout" asp-route-id="@payment.Id" method="post">
+                                            @Html.AntiForgeryToken()
+                                            <button class="button is-primary" type="submit" title="Pay obligation"
+                                                    aria-label="Pay obligation">
+                                                <span class="icon"><i class="fa-solid fa-credit-card" aria-hidden="true"></i></span>
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

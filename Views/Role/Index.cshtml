@@ -1,0 +1,48 @@
+@model IEnumerable<SchoolHub.Models.ViewModels.Role.ListRoleViewModel>
+
+<div class="container">
+    <h1 class="title is-2">Roles</h1>
+    <a asp-controller="Role" asp-action="Create" class="button is-primary">
+        Create Role
+    </a>
+
+    <div class="table-container mt-5">
+        <table class="table is-fullwidth is-hoverable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Normalized name</th>
+                    <th>Identifier</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="4" class="has-text-centered">No roles found.</td></tr>
+                }
+                else
+                {
+                    @foreach (var role in Model)
+                    {
+                        <tr>
+                            <td>@role.Name</td>
+                            <td>@role.NormalizedName</td>
+                            <td>@role.Id</td>
+                            <td>
+                                <div class="buttons are-small">
+                                    <a asp-action="Edit" asp-route-id="@role.Id" class="button is-info" title="Edit role" aria-label="Edit role">
+                                        <span class="icon"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></span>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@role.Id" class="button is-danger" title="Delete role" aria-label="Delete role">
+                                        <span class="icon"><i class="fa-solid fa-trash" aria-hidden="true"></i></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

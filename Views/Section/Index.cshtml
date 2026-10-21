@@ -1,0 +1,52 @@
+@model IEnumerable<SchoolHub.Models.ViewModels.Section.ListSectionViewModel>
+
+<div class="container">
+    <h1 class="title is-2">Sections</h1>
+    <a asp-controller="Section" asp-action="Create" class="button is-primary">
+        Create Section
+    </a>
+
+    <div class="table-container mt-5">
+        <table class="table is-fullwidth is-hoverable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Level</th>
+                    <th>Grade</th>
+                    <th>Limit</th>
+                    <th>Enrollments</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="5" class="has-text-centered">No sections found.</td></tr>
+                }
+                else
+                {
+                    @foreach (var currentSection in Model)
+                    {
+                        <tr>
+                            <td>@(currentSection.Name)</td>
+                            <td>@(currentSection.LevelName)</td>
+                            <td>@(currentSection.GradeName)</td>
+                            <td>@(currentSection.LimitQuantity)</td>
+                            <td>@(currentSection.EnrollmentCount)</td>
+                            <td>
+                                <div class="buttons are-small">
+                                    <a asp-action="Edit" asp-route-id="@currentSection.Id" class="button is-info" title="Edit section" aria-label="Edit section">
+                                        <span class="icon"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></span>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@currentSection.Id" class="button is-danger" title="Delete section" aria-label="Delete section">
+                                        <span class="icon"><i class="fa-solid fa-trash" aria-hidden="true"></i></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

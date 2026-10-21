@@ -1,0 +1,46 @@
+@model IEnumerable<SchoolHub.Models.ViewModels.Level.ListLevelViewModel>
+
+<div class="container">
+    <h1 class="title is-2">Levels</h1>
+    <a asp-controller="Level" asp-action="Create" class="button is-primary">
+        Create Level
+    </a>
+
+    <div class="table-container mt-5">
+        <table class="table is-fullwidth is-hoverable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Grades</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="3" class="has-text-centered">No levels found.</td></tr>
+                }
+                else
+                {
+                    @foreach (var level in Model)
+                    {
+                        <tr>
+                            <td>@level.Name</td>
+                            <td>@level.GradeCount</td>
+                            <td>
+                                <div class="buttons are-small">
+                                    <a asp-action="Edit" asp-route-id="@level.Id" class="button is-info" title="Edit level" aria-label="Edit level">
+                                        <span class="icon"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></span>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@level.Id" class="button is-danger" title="Delete level" aria-label="Delete level">
+                                        <span class="icon"><i class="fa-solid fa-trash" aria-hidden="true"></i></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

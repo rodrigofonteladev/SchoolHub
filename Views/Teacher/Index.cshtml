@@ -1,0 +1,49 @@
+@model IEnumerable<SchoolHub.Models.ViewModels.Teacher.ListTeacherViewModel>
+
+<div class="container">
+    <h1 class="title is-2">Teachers</h1>
+
+    <div class="table-container mt-5">
+        <table class="table is-fullwidth is-hoverable">
+            <thead>
+                <tr>
+                    <th>Full name</th>
+                    <th>Document</th>
+                    <th>Email</th>
+                    <th>Class assignments</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="6" class="has-text-centered">No teachers found.</td></tr>
+                }
+                else
+                {
+                    @foreach (var teacher in Model)
+                    {
+                        <tr>
+                            <td>@teacher.FullName @teacher.PaternalSurname @teacher.MaternalSurname</td>
+                            <td>@teacher.DocumentTypeName: @teacher.DocumentNumber</td>
+                            <td>@teacher.Email</td>
+                            <td>@teacher.ClassAssignmentCount</td>
+                            <td>@(teacher.IsActive ? "Active" : "Inactive")</td>
+                            <td>
+                                <div class="buttons are-small">
+                                    <a asp-action="Edit" asp-route-id="@teacher.Id" class="button is-info" title="Edit teacher" aria-label="Edit teacher">
+                                        <span class="icon"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></span>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@teacher.Id" class="button is-danger" title="Delete teacher" aria-label="Delete teacher">
+                                        <span class="icon"><i class="fa-solid fa-trash" aria-hidden="true"></i></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
