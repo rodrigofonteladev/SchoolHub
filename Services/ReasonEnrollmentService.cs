@@ -38,5 +38,15 @@ namespace SchoolHub.Services
 
             return Result.Success();
         }
+
+        public async Task<RegisterReasonEnrollmentViewModel?> GetForEditAsync(int id) => await context.ReasonEnrollments.AsNoTracking().Where(item => item.Id == id).Select(item => new RegisterReasonEnrollmentViewModel { Description = item.Description }).FirstOrDefaultAsync();
+
+        public async Task<Result> UpdateAsync(int id, string description)
+        {
+            var entity = await context.ReasonEnrollments.FindAsync(id);
+            if (entity is null) return Result.Failure("The enrollment reason does not exist.");
+            if (await context.ReasonEnrollments.AnyAsync(item => item.Id != id && item.Description == description)) return Result.Failure("That enrollment reason already exists.");
+            entity.Description = description; await context.SaveChangesAsync(); return Result.Success();
+        }
     }
 }

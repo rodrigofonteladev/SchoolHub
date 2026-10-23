@@ -45,5 +45,16 @@ namespace SchoolHub.Services
 
             return Result.Success();
         }
+
+        public async Task<RegisterSectionViewModel?> GetForEditAsync(int id) => await context.Sections.AsNoTracking().Where(item => item.Id == id).Select(item => new RegisterSectionViewModel { Name = item.Name, GradeId = item.GradeId }).FirstOrDefaultAsync();
+
+        public async Task<Result> UpdateAsync(int id, string name, int gradeId)
+        {
+            var entity = await context.Sections.FindAsync(id);
+            if (entity is null) return Result.Failure("The section does not exist.");
+            if (!await context.Grades.AnyAsync(item => item.Id == gradeId)) return Result.Failure("The selected grade does not exist.");
+            if (await context.Sections.AnyAsync(item => item.Id != id && item.GradeId == gradeId && item.Name == name)) return Result.Failure("A section with that name already exists in the selected grade.");
+            entity.Name = name; entity.GradeId = gradeId; await context.SaveChangesAsync(); return Result.Success();
+        }
     }
 }

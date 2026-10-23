@@ -112,6 +112,26 @@ a:focus {
   color: #26344d;
 }
 
+.form-actions {
+  margin-top: 1.25rem;
+  text-align: center;
+}
+
+.app-main form {
+  text-align: center;
+}
+
+.app-main form > .columns,
+.app-main form > .field,
+.app-main form > .box,
+.app-main form > label,
+.app-main form > input,
+.app-main form > textarea,
+.app-main form > .select,
+.app-main form > span {
+  text-align: left;
+}
+
 .button.is-success {
   background-color: #8494f5;
   border-color: transparent;

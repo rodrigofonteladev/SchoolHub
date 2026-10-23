@@ -27,7 +27,7 @@ a {
   left: 0;
   position: fixed;
   top: 0;
-  width: 68px;
+  width: 230px;
   z-index: 1030;
 }
 
@@ -65,10 +65,16 @@ a {
   border-radius: .35rem;
   color: var(--sidebar-icon);
   display: flex;
-  justify-content: center;
+  gap: .75rem;
+  justify-content: flex-start;
   min-height: 2.5rem;
   padding: .55rem;
   text-decoration: none;
+}
+
+.sidebar-link-text {
+  font-size: .9rem;
+  white-space: nowrap;
 }
 
 .sidebar-link:hover,
@@ -100,7 +106,7 @@ a {
 
 .app-content {
   min-height: 100vh;
-  padding-left: 68px;
+  padding-left: 230px;
   transition: padding-left .2s ease-in-out;
 }
 

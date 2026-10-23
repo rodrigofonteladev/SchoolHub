@@ -42,5 +42,16 @@ namespace SchoolHub.Services
 
             return Result.Success();
         }
+
+        public async Task<RegisterGradeViewModel?> GetForEditAsync(int id) => await context.Grades.AsNoTracking().Where(item => item.Id == id).Select(item => new RegisterGradeViewModel { Name = item.Name, LevelId = item.LevelId }).FirstOrDefaultAsync();
+
+        public async Task<Result> UpdateAsync(int id, string name, int levelId)
+        {
+            var entity = await context.Grades.FindAsync(id);
+            if (entity is null) return Result.Failure("The grade does not exist.");
+            if (!await context.Levels.AnyAsync(item => item.Id == levelId)) return Result.Failure("The selected level does not exist.");
+            if (await context.Grades.AnyAsync(item => item.Id != id && item.LevelId == levelId && item.Name == name)) return Result.Failure("A grade with that name already exists in the selected level.");
+            entity.Name = name; entity.LevelId = levelId; await context.SaveChangesAsync(); return Result.Success();
+        }
     }
 }

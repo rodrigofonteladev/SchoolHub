@@ -14,6 +14,11 @@ namespace SchoolHub.Models.ViewModels.Tutor
         [Required(ErrorMessage = "The relationship is required")]
         public TutorType? Relationship { get; set; }
 
+        [Required(ErrorMessage = "The student is required")]
+        [Display(Name = "Student")]
+        public int? StudentId { get; set; }
+
         public IEnumerable<SelectListItem> DocumentTypes { get; set; } = new List<SelectListItem>();
+        public IEnumerable<SelectListItem> Students { get; set; } = new List<SelectListItem>();
     }
 }

@@ -2,13 +2,15 @@
 
 <div class="container">
     <h1 class="title is-2">Teachers</h1>
+    <a asp-controller="Teacher" asp-action="Create" class="button is-primary">Create Teacher</a>
 
     <div class="table-container mt-5">
         <table class="table is-fullwidth is-hoverable">
             <thead>
                 <tr>
                     <th>Full name</th>
-                    <th>Document</th>
+                    <th>Type document</th>
+                    <th>Number document</th>
                     <th>Email</th>
                     <th>Class assignments</th>
                     <th>Status</th>
@@ -18,7 +20,7 @@
             <tbody>
                 @if (!Model.Any())
                 {
-                    <tr><td colspan="6" class="has-text-centered">No teachers found.</td></tr>
+                    <tr><td colspan="7" class="has-text-centered">No teachers found.</td></tr>
                 }
                 else
                 {
@@ -26,7 +28,8 @@
                     {
                         <tr>
                             <td>@teacher.FullName @teacher.PaternalSurname @teacher.MaternalSurname</td>
-                            <td>@teacher.DocumentTypeName: @teacher.DocumentNumber</td>
+                            <td>@teacher.DocumentTypeName</td>
+                            <td>@teacher.DocumentNumber</td>
                             <td>@teacher.Email</td>
                             <td>@teacher.ClassAssignmentCount</td>
                             <td>@(teacher.IsActive ? "Active" : "Inactive")</td>

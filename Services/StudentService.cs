@@ -137,6 +137,19 @@ namespace SchoolHub.Services
             }
         }
 
+        public async Task<EditStudentViewModel?> GetForEditAsync(int id) => await context.Students.AsNoTracking().Where(item => item.Id == id).Select(item => new EditStudentViewModel
+        { FullName = item.FullName, PaternalSurname = item.PaternalSurname, MaternalSurname = item.MaternalSurname, DocumentNumber = item.DocumentNumber, Email = item.Email, Address = item.Address, Birthday = item.Birthday, DocumentTypeId = item.DocumentTypeId }).FirstOrDefaultAsync();
+
+        public async Task<Result> UpdateAsync(int id, EditStudentViewModel model)
+        {
+            var entity = await context.Students.FindAsync(id);
+            if (entity is null) return Result.Failure("The student does not exist.");
+            if (!await context.DocumentTypes.AnyAsync(item => item.Id == model.DocumentTypeId)) return Result.Failure("The selected document type does not exist.");
+            if (await context.Students.AnyAsync(item => item.Id != id && item.DocumentNumber == model.DocumentNumber)) return Result.Failure("A student with that document number already exists.");
+            entity.FullName = model.FullName; entity.PaternalSurname = model.PaternalSurname; entity.MaternalSurname = model.MaternalSurname; entity.DocumentNumber = model.DocumentNumber; entity.Email = model.Email; entity.Address = model.Address; entity.Birthday = model.Birthday!.Value; entity.DocumentTypeId = model.DocumentTypeId!.Value;
+            await context.SaveChangesAsync(); return Result.Success();
+        }
+
 
     }
 }

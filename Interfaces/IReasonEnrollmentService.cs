@@ -7,5 +7,7 @@ namespace SchoolHub.Interfaces
     {
         Task<List<ListReasonEnrollmentViewModel>> GetAllAsync();
         Task<Result> CreateAsync(string description);
+        Task<RegisterReasonEnrollmentViewModel?> GetForEditAsync(int id);
+        Task<Result> UpdateAsync(int id, string description);
     }
 }

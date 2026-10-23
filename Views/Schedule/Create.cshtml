@@ -1,0 +1,36 @@
+@model SchoolHub.Models.ViewModels.Schedule.RegisterScheduleViewModel
+<div class="container">
+    <h1 class="title is-2">Schedule Creation Form</h1>
+    <form asp-action="Create" method="post">@Html.AntiForgeryToken()<div asp-validation-summary="ModelOnly"
+                                                                             class="help is-danger mb-4"></div>
+        <div class="columns">
+            <div class="column is-3"><label asp-for="DayWeekId" class="label"></label>
+                <div class="select is-fullwidth"><select asp-for="DayWeekId" asp-items="Model.Days">
+                    <option value="">Select a day</option>
+                </select></div><span asp-validation-for="DayWeekId" class="help is-danger"></span>
+            </div>
+            <div class="column is-3"><label asp-for="ShiftId" class="label"></label>
+                <div class="select is-fullwidth"><select asp-for="ShiftId" asp-items="Model.Shifts">
+                    <option value="">Select a shift</option>
+                </select></div><span asp-validation-for="ShiftId" class="help is-danger"></span>
+            </div>
+            <div class="column is-3">
+                <label asp-for="StartTime" class="label"></label>
+                <input asp-for="StartTime" class="input" type="time" />
+                <span asp-validation-for="StartTime" class="help is-danger"></span>
+            </div>
+            <div class="column is-3">
+                <label asp-for="EndTime" class="label"></label>
+                <input asp-for="EndTime" class="input" type="time" />
+                <span asp-validation-for="EndTime" class="help is-danger"></span>
+            </div>
+        </div><button class="button is-primary" type="submit">Register Schedule</button> <a asp-action="Index"
+                                                                                            class="button is-light">Back to schedules</a>
+    </form>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

@@ -13,7 +13,7 @@ namespace SchoolHub.Data.Configurations
             builder.HasIndex(col => new { col.ShiftId, col.DayWeekId, col.StartTime, col.EndTime }).IsUnique();
             builder.ToTable(t =>
             {
-                t.HasCheckConstraint("CK_Schedule_StartTime", "StartTime > EndTime");
+                t.HasCheckConstraint("CK_Schedule_StartTime", "StartTime < EndTime");
             });
 
             builder

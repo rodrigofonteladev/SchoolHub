@@ -42,5 +42,15 @@ namespace SchoolHub.Services
 
             return Result.Success();
         }
+
+        public async Task<RegisterDocumentTypeViewModel?> GetForEditAsync(int id) => await context.DocumentTypes.AsNoTracking().Where(item => item.Id == id).Select(item => new RegisterDocumentTypeViewModel { Name = item.Name, IsActive = item.IsActive }).FirstOrDefaultAsync();
+
+        public async Task<Result> UpdateAsync(int id, string name, bool isActive)
+        {
+            var entity = await context.DocumentTypes.FindAsync(id);
+            if (entity is null) return Result.Failure("The document type does not exist.");
+            if (await context.DocumentTypes.AnyAsync(item => item.Id != id && item.Name == name)) return Result.Failure("A document type with that name already exists.");
+            entity.Name = name; entity.IsActive = isActive; await context.SaveChangesAsync(); return Result.Success();
+        }
     }
 }

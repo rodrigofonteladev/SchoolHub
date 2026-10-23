@@ -19,6 +19,49 @@ namespace SchoolHub.Services
             }).ToListAsync();
         }
 
+        public async Task<List<SelectListItem>> GetCategoryCoursesSelectListAsync()
+        {
+            return await context.CategoryCourses.AsNoTracking().OrderBy(category => category.Name)
+                .Select(category => new SelectListItem { Value = category.Id.ToString(), Text = category.Name })
+                .ToListAsync();
+        }
+
+        public async Task<List<SelectListItem>> GetTeachersSelectListAsync() => await context.Teachers.AsNoTracking()
+            .OrderBy(item => item.PaternalSurname).Select(item => new SelectListItem
+            { Value = item.Id.ToString(), Text = $"{item.FullName} {item.PaternalSurname} {item.MaternalSurname}" }).ToListAsync();
+
+        public async Task<List<SelectListItem>> GetCoursesSelectListAsync() => await context.Courses.AsNoTracking()
+            .OrderBy(item => item.Name).Select(item => new SelectListItem
+            { Value = item.Id.ToString(), Text = item.Name }).ToListAsync();
+
+        public async Task<List<SelectListItem>> GetSchedulesSelectListAsync()
+        {
+            var schedules = await context.Schedules.AsNoTracking()
+                .OrderBy(item => item.DayWeekId).ThenBy(item => item.StartTime)
+                .Select(item => new { item.Id, Day = item.DayWeek.Name, item.StartTime, item.EndTime, Shift = item.Shift.Name })
+                .ToListAsync();
+
+            return schedules.Select(item => new SelectListItem
+            {
+                Value = item.Id.ToString(),
+                Text = $"{item.Day} {item.StartTime:HH\\:mm}-{item.EndTime:HH\\:mm} ({item.Shift})"
+            }).ToList();
+        }
+
+        public async Task<List<SelectListItem>> GetStudentsSelectListAsync() => await context.Students.AsNoTracking()
+            .OrderBy(item => item.PaternalSurname).Select(item => new SelectListItem
+            { Value = item.Id.ToString(), Text = $"{item.FullName} {item.PaternalSurname} {item.MaternalSurname}" }).ToListAsync();
+
+        public async Task<List<SelectListItem>> GetClassAsignmentsSelectListAsync() => await context.ClassAsignments.AsNoTracking()
+            .OrderByDescending(item => item.AssignedYear).Select(item => new SelectListItem
+            { Value = item.Id.ToString(), Text = $"{item.Course.Name} - {item.Teacher.FullName} - {item.AssignedYear}" }).ToListAsync();
+
+        public async Task<List<SelectListItem>> GetShiftsSelectListAsync() => await context.Shifts.AsNoTracking().OrderBy(item => item.Name)
+            .Select(item => new SelectListItem { Value = item.Id.ToString(), Text = item.Name }).ToListAsync();
+
+        public async Task<List<SelectListItem>> GetDaysSelectListAsync() => await context.DayWeeks.AsNoTracking().OrderBy(item => item.Id)
+            .Select(item => new SelectListItem { Value = item.Id.ToString(), Text = item.Name }).ToListAsync();
+
         public async Task<List<SelectListItem>> GetLevelsSelectListAsync()
         {
             return await context.Levels

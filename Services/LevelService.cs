@@ -35,5 +35,15 @@ namespace SchoolHub.Services
 
             return Result.Success();
         }
+
+        public async Task<RegisterLevelViewModel?> GetForEditAsync(int id) => await context.Levels.AsNoTracking().Where(item => item.Id == id).Select(item => new RegisterLevelViewModel { Name = item.Name }).FirstOrDefaultAsync();
+
+        public async Task<Result> UpdateAsync(int id, string name)
+        {
+            var entity = await context.Levels.FindAsync(id);
+            if (entity is null) return Result.Failure("The level does not exist.");
+            if (await context.Levels.AnyAsync(item => item.Id != id && item.Name == name)) return Result.Failure("A level with that name already exists.");
+            entity.Name = name; await context.SaveChangesAsync(); return Result.Success();
+        }
     }
 }

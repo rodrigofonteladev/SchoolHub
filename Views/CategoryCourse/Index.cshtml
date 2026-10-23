@@ -1,0 +1,7 @@
+@model IEnumerable<SchoolHub.Models.ViewModels.CategoryCourse.ListCategoryCourseViewModel>
+<div class="container">
+    <h1 class="title is-2">Course Categories</h1><a asp-action="Create" class="button is-primary">Create Category</a>
+    <div class="table-container mt-5"><table class="table is-fullwidth is-hoverable"><thead><tr><th>Name</th><th>Description</th><th>Courses</th><th>Actions</th></tr></thead><tbody>
+    @if (!Model.Any()) { <tr><td colspan="4" class="has-text-centered">No course categories found.</td></tr> } else { foreach (var category in Model) { <tr><td>@category.Name</td><td>@category.Description</td><td>@category.CourseCount</td><td><a asp-action="Edit" asp-route-id="@category.Id" class="button is-small is-info" title="Edit category"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span></a></td></tr> } }
+    </tbody></table></div>
+</div>

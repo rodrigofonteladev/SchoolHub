@@ -1,0 +1,3 @@
+@model SchoolHub.Models.ViewModels.DayWeek.RegisterDayWeekViewModel
+<div class="container"><h1 class="title is-2">Day Creation Form</h1><form asp-action="Create" method="post">@Html.AntiForgeryToken()<div asp-validation-summary="ModelOnly" class="help is-danger mb-4"></div><label asp-for="Name" class="label"></label><input asp-for="Name" class="input"/><span asp-validation-for="Name" class="help is-danger"></span><button class="button is-primary mt-4" type="submit">Register Day</button> <a asp-action="Index" class="button is-light mt-4">Back to days</a></form></div>
+@section Scripts { @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); } }

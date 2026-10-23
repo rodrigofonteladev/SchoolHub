@@ -1,0 +1,20 @@
+@model SchoolHub.Models.ViewModels.Teacher.RegisterTeacherViewModel
+
+<div class="container">
+    <h1 class="title is-2">Teacher Creation Form</h1>
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="help is-danger mb-4"></div>
+        <div class="columns is-multiline">
+            <div class="column is-12-mobile is-6-tablet"><label asp-for="FullName" class="label"></label><input asp-for="FullName" class="input" /><span asp-validation-for="FullName" class="help is-danger"></span></div>
+            <div class="column is-12-mobile is-6-tablet"><label asp-for="PaternalSurname" class="label"></label><input asp-for="PaternalSurname" class="input" /><span asp-validation-for="PaternalSurname" class="help is-danger"></span></div>
+            <div class="column is-12-mobile is-6-tablet"><label asp-for="MaternalSurname" class="label"></label><input asp-for="MaternalSurname" class="input" /><span asp-validation-for="MaternalSurname" class="help is-danger"></span></div>
+            <div class="column is-12-mobile is-6-tablet"><label asp-for="DocumentNumber" class="label"></label><input asp-for="DocumentNumber" class="input" /><span asp-validation-for="DocumentNumber" class="help is-danger"></span></div>
+            <div class="column is-12-mobile is-6-tablet"><label asp-for="DocumentTypeId" class="label"></label><div class="select is-fullwidth"><select asp-for="DocumentTypeId" asp-items="Model.DocumentTypes"><option value="">Select a document type</option></select></div><span asp-validation-for="DocumentTypeId" class="help is-danger"></span></div>
+            <div class="column is-12-mobile is-6-tablet"><label asp-for="Email" class="label"></label><input asp-for="Email" class="input" /><span asp-validation-for="Email" class="help is-danger"></span></div>
+            <div class="column is-12"><label asp-for="Address" class="label"></label><input asp-for="Address" class="input" /><span asp-validation-for="Address" class="help is-danger"></span></div>
+        </div>
+        <div class="has-text-centered"><button class="button is-primary" type="submit">Register Teacher</button> <a asp-action="Index" class="button is-light">Back to teachers</a></div>
+    </form>
+</div>
+@section Scripts { @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); } }

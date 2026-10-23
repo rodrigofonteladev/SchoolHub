@@ -7,5 +7,7 @@ namespace SchoolHub.Interfaces
     {
         Task<List<ListStudentViewModel>> GetAllAsync();
         Task<Result> CreateAsync(RegisterStudentViewModel model);
+        Task<EditStudentViewModel?> GetForEditAsync(int id);
+        Task<Result> UpdateAsync(int id, EditStudentViewModel model);
     }
 }

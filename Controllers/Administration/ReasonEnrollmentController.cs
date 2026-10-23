@@ -32,5 +32,9 @@ namespace SchoolHub.Controllers.Administration
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet] public async Task<IActionResult> Edit(int id) { var model = await reasonEnrollmentService.GetForEditAsync(id); return model is null ? NotFound() : View(model); }
+        [HttpPost] public async Task<IActionResult> Edit(int id, RegisterReasonEnrollmentViewModel model)
+        { if (!ModelState.IsValid) return View(model); var result = await reasonEnrollmentService.UpdateAsync(id, model.Description); if (!result.Succeeded) { ModelState.AddModelError(string.Empty, result.Error ?? "An unexpected error ocurred"); return View(model); } return RedirectToAction(nameof(Index)); }
     }
 }

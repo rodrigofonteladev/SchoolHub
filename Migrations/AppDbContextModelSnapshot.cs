@@ -800,7 +800,7 @@ namespace SchoolHub.Migrations
 
                     b.ToTable("Schedules", t =>
                         {
-                            t.HasCheckConstraint("CK_Schedule_StartTime", "StartTime > EndTime");
+                            t.HasCheckConstraint("CK_Schedule_StartTime", "StartTime < EndTime");
                         });
                 });
 

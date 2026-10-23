@@ -1,0 +1,17 @@
+@model SchoolHub.Models.ViewModels.ClassAsignment.RegisterClassAsignmentViewModel
+<div class="container">
+    <h1 class="title is-2">Class Assignment Creation Form</h1>
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="help is-danger mb-4"></div>
+        <div class="columns is-multiline">
+            <div class="column is-3"><label asp-for="AssignedYear" class="label"></label><input class="input" value="@DateTime.Now.Year" readonly /><input asp-for="AssignedYear" type="hidden" /></div>
+            <div class="column is-9"><label asp-for="TeacherId" class="label"></label><div class="select is-fullwidth"><select asp-for="TeacherId" asp-items="Model.Teachers"><option value="">Select a teacher</option></select></div><span asp-validation-for="TeacherId" class="help is-danger"></span></div>
+            <div class="column is-6"><label asp-for="CourseId" class="label"></label><div class="select is-fullwidth"><select asp-for="CourseId" asp-items="Model.Courses"><option value="">Select a course</option></select></div><span asp-validation-for="CourseId" class="help is-danger"></span></div>
+            <div class="column is-6"><label asp-for="SectionId" class="label"></label><div class="select is-fullwidth"><select asp-for="SectionId" asp-items="Model.Sections"><option value="">Select a section</option></select></div><span asp-validation-for="SectionId" class="help is-danger"></span></div>
+            <div class="column is-12"><label asp-for="ScheduleId" class="label"></label><div class="select is-fullwidth"><select asp-for="ScheduleId" asp-items="Model.Schedules"><option value="">Select a schedule</option></select></div><span asp-validation-for="ScheduleId" class="help is-danger"></span></div>
+        </div>
+        <div class="form-actions"><button class="button is-primary" type="submit">Register Assignment</button> <a asp-action="Index" class="button is-light">Back to assignments</a></div>
+    </form>
+</div>
+@section Scripts { @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); } }

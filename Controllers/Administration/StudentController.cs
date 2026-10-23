@@ -72,6 +72,10 @@ namespace SchoolHub.Controllers.Administration
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet] public async Task<IActionResult> Edit(int id) { var model = await studentService.GetForEditAsync(id); if (model is null) return NotFound(); model.DocumentTypes = await catalogService.GetDocumentTypesSelectListAsync(); return View(model); }
+        [HttpPost] public async Task<IActionResult> Edit(int id, EditStudentViewModel model)
+        { if (!ModelState.IsValid) { model.DocumentTypes = await catalogService.GetDocumentTypesSelectListAsync(); return View(model); } var result = await studentService.UpdateAsync(id, model); if (!result.Succeeded) { ModelState.AddModelError(string.Empty, result.Error ?? "An unexpected error ocurred"); model.DocumentTypes = await catalogService.GetDocumentTypesSelectListAsync(); return View(model); } return RedirectToAction(nameof(Index)); }
+
         private async Task PopulateDocumentTypesTutorsAsync(RegisterStudentViewModel model)
         {
             var documentTypes = await catalogService.GetDocumentTypesSelectListAsync();

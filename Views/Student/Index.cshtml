@@ -11,7 +11,8 @@
             <thead>
                 <tr>
                     <th>Full name</th>
-                    <th>Document</th>
+                    <th>Type document</th>
+                    <th>Number document</th>
                     <th>Email</th>
                     <th>Birthday</th>
                     <th>Points</th>
@@ -23,7 +24,7 @@
             <tbody>
                 @if (!Model.Any())
                 {
-                    <tr><td colspan="8" class="has-text-centered">No students found.</td></tr>
+                    <tr><td colspan="9" class="has-text-centered">No students found.</td></tr>
                 }
                 else
                 {
@@ -31,7 +32,8 @@
                     {
                         <tr>
                             <td>@student.FullName @student.PaternalSurname @student.MaternalSurname</td>
-                            <td>@student.DocumentTypeName: @student.DocumentNumber</td>
+                            <td>@student.DocumentTypeName</td>
+                            <td>@student.DocumentNumber</td>
                             <td>@student.Email</td>
                             <td>@student.Birthday.ToString("dd/MM/yyyy")</td>
                             <td>@student.PointsBalance</td>

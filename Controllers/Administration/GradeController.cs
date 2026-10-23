@@ -46,6 +46,10 @@ namespace SchoolHub.Controllers.Administration
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet] public async Task<IActionResult> Edit(int id) { var model = await gradeService.GetForEditAsync(id); if (model is null) return NotFound(); await PopulateLevelsAsync(model); return View(model); }
+        [HttpPost] public async Task<IActionResult> Edit(int id, RegisterGradeViewModel model)
+        { if (!ModelState.IsValid) { await PopulateLevelsAsync(model); return View(model); } var result = await gradeService.UpdateAsync(id, model.Name, model.LevelId!.Value); if (!result.Succeeded) { ModelState.AddModelError(string.Empty, result.Error ?? "An unexpected error ocurred"); await PopulateLevelsAsync(model); return View(model); } return RedirectToAction(nameof(Index)); }
+
         private async Task PopulateLevelsAsync(RegisterGradeViewModel model)
         {
             model.Levels = await catalogService.GetLevelsSelectListAsync();
